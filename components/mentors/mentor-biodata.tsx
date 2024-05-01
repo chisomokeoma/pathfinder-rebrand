@@ -286,7 +286,7 @@ export default function MentorBiodata() {
           }}
         />
         {form.values.entries.map((item, idx) => (
-          <div className="flex items-center gap-6">
+          <div key={idx} className="flex items-center gap-6">
             <p>{item.day}</p>
             <NumberInput
               styles={{

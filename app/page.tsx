@@ -460,7 +460,7 @@ export default function Home() {
             ))}
           </Carousel> */}
           {courseList?.map((item, idx) => (
-            <CourseCard {...item} />
+            <CourseCard key={idx} {...item} />
           ))}
         </section>
       </section>
@@ -617,8 +617,9 @@ export default function Home() {
       {/* Mentorship Section */}
       <section className=" flex flex-col gap-[92px]  bg-[#F7F7F9] px-[clamp(50px,7vw,100px)] pb-[clamp(25px,3.4vw,50px)] background-shadow ">
         <div className=" flex py-[clamp(25px,3.7vw,54px)]   px-[clamp(40px,5.3vw,80px)]  bg-purple justify-between rounded-[40px] -mt-[4rem]  ">
-          {statistics.map((item) => (
+          {statistics.map((item, idx) => (
             <article
+              key={idx}
               className={clsx(
                 item.text !== "Active Months"
                   ? "border-shadow pr-[80px]"

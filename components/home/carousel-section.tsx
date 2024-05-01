@@ -67,8 +67,8 @@ export default function CarouselSection() {
             // slidesToScroll={4}
             align="start"
           >
-            {carouselList.map((item) => (
-              <Carousel.Slide styles={{}}>
+            {carouselList.map((item, index) => (
+              <Carousel.Slide key={index} styles={{}}>
                 <Link
                   href="/resources"
                   className=" p-[clamp(12px,1.8vw,26px)] flex flex-col gap-[clamp(10px,1.4vw,20px)] bg-white rounded-lg"

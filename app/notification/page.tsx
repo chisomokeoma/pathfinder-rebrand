@@ -34,8 +34,8 @@ function notification() {
         <div className="w-[395px] h-[72px] text-[#161439] font-semibold text-[36px]">
           Notification
         </div>
-        {containerList?.map((item) => (
-          <div className=" px-[31px] py-[30px] flex flex-col gap-[40px] shadow-xl bg-[#F6F6F6]   justify-center">
+        {containerList?.map((item, idx) => (
+          <div key={idx} className=" px-[31px] py-[30px] flex flex-col gap-[40px] shadow-xl bg-[#F6F6F6]   justify-center">
             <div className=" flex gap-[42px] items-center pt-[30px]">
               <Avatar size="xl" src={item.picture} />
               <article className=" flex flex-col">
