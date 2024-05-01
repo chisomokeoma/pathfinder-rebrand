@@ -1,6 +1,6 @@
 // import { toast.error } from "./notification-handler";
 
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 // import { string } from "yup";
 
 export type ErrorType = {

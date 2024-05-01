@@ -29,7 +29,7 @@ export default function SectionsBlog() {
               return (
                 <Card key={resources._id} className="relative  flex flex-col  gap-4 w-80 p-4 border-l-0 border-r-2 border-t-2">
                   <Image
-                    src={resources.image?.filePath.replace("../public", "")}
+                    src={resources.image?.filePath.replace("../public", "") ?? ""}
                     alt="blog"
                     width={100}
                     height={100}

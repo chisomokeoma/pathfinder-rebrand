@@ -17,10 +17,26 @@ import { TiStarFullOutline } from "react-icons/ti";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { usePortal } from "@ibnlanre/portal";
+import { userAtom } from "@/api/queries-store";
+import { useQuery } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { FaStar } from "react-icons/fa";
+import ListSkeleton from "../skeletons/list-skeleton";
 
 export default function Sections() {
   const num = 100;
   const { push, replace } = useRouter();
+  const [user, setUser] = usePortal.atom(userAtom);
+  console.log(user, "user");
+
+  const { data: courseList, isLoading } = useQuery({
+    queryFn: () => builder.use().resources.courses.fetch(),
+    queryKey: builder.resources.courses.fetch.get(),
+    select: ({ data }) => data,
+  });
+  console.log(courseList, " course");
+
   return (
     <React.Fragment>
       <main className="">
@@ -43,61 +59,70 @@ export default function Sections() {
             <MdGridView size={32} className="bg-purple-700 text-white p-1" />
             <TfiMenuAlt size={32} />
 
-            <Link href='/resources/create-resource'>
-              <Button
-                className="h-[50px]"
-                variant="primary"
-             
-              >
-                <span className="flex items-center text-base font-semibold leading-[17.92px] text-white gap-1">
-                  Create Resources
-                </span>
-              </Button>
-            </Link>
+            {user?.role === "MENTOR" ? (
+              <Link href="/resources/create-resource">
+                <Button className="h-[50px]" variant="primary">
+                  <span className="flex items-center text-base font-semibold leading-[17.92px] text-white gap-1">
+                    Create Resources
+                  </span>
+                </Button>
+              </Link>
+            ) : null}
           </div>
         </div>
         <section>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 mt-2">
-            {ResourcesData.map((resources) => {
-              return (
-                <Card
-                  key={resources.id}
-                  className="  flex flex-col  gap-4 w-80 p-4"
-                >
-                  <Image
-                    src={resources.img}
-                    alt={resources.tag}
-                    width={100}
-                    height={100}
-                    className="w-72  block m-auto"
-                  />
-                  <div className="flex items-center gap-10 justify-between">
-                    <Badge variant="outline">{resources.tag}</Badge>
-                    <span className="flex items-center">
-                      {" "}
-                      <TiStarFullOutline className="text-yellow-400" /> (
-                      {resources.review} Reviews)
-                    </span>
-                  </div>
-                  <p className="font-bold p-0 items-start">{resources.desc}</p>
-                  <span className="p-0 ml-0 ">By {resources.by}</span>
+          {isLoading ? (
+            <ListSkeleton />
+          ) : (
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 mt-2">
+              {courseList?.map((resource) => {
+                return (
+                  <Card
+                    key={resource.id}
+                    className="  flex flex-col  gap-4 w-80 p-4"
+                  >
+                    <Image
+                      src={resource?.coverPhoto ?? ""}
+                      alt="course picture"
+                      width={100}
+                      height={100}
+                      className="w-72  block m-auto"
+                    />
+                    <div className="flex items-center gap-10 justify-between">
+                      <Badge variant="outline">{resource?.category}</Badge>
+                      <article className=" flex gap-[5px] items-center ">
+                        <FaStar color="#F8BC24" />
 
-                  <div className="flex justify-between items-center">
-                    <Button   variant='primary'
-                      className="rounded-3xl flex gap-2 text-white"
-                      onClick={() => push(`/resources/1`)}
-                    >
-                      Enrol Now <MdArrowRightAlt />
-                    </Button>
-                    <span className="text-blue-700 capitalize">
-                      {resources.foot}
+                        <p className="text-[13px] font-normal text-[#7F7E97]">
+                          4.8 Ratings
+                        </p>
+                      </article>
+                    </div>
+                    <p className="font-bold p-0 items-start">
+                      {resource?.title}
+                    </p>
+                    <span className="p-0 ml-0 ">
+                      By {resource?.owner?.name}
                     </span>
-                  </div>
-                  {/* {resources.foot} */}
-                </Card>
-              );
-            })}
-          </div>
+
+                    <div className="flex justify-between items-center">
+                      <Button
+                        variant="primary"
+                        className="rounded-3xl flex gap-2 text-white"
+                        onClick={() => push(`/resources/${resource?.id}`)}
+                      >
+                        Enrol Now <MdArrowRightAlt />
+                      </Button>
+                      <span className="text-blue-700 capitalize">
+                        {resource.price}
+                      </span>
+                    </div>
+                    {/* {resources.foot} */}
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </section>
       </main>
     </React.Fragment>

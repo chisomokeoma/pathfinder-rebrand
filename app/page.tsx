@@ -29,6 +29,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import CarouselSection from "@/components/home/carousel-section";
 import AccordionSection from "@/components/home/accordion-section";
+import { useQuery } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { usePortal } from "@ibnlanre/portal";
+import { userAtom } from "@/api/queries-store";
+import ArticleCard from "@/components/resources/article-card";
+import CourseCard from "@/components/resources/course-card";
+import { ResourceType } from "@/types";
 
 const items = [
   {
@@ -92,7 +99,6 @@ const carouselList = [
     details: "Financial Analyst Training & Investing Course",
     id: 4,
   },
-  
 ];
 
 const mentorList = [
@@ -125,26 +131,6 @@ const skilledMentors = [
     skill: "Web Development",
     img: "/instructor4.svg",
     id: 4,
-  },
-];
-
-const statistics = [
-  {
-    name: "10K +",
-    text: "Active Menteees",
-  },
-
-  {
-    name: "60K +",
-    text: "Resources",
-  },
-  {
-    name: "3K ",
-    text: "Mentors",
-  },
-  {
-    name: "3",
-    text: "Active Months",
   },
 ];
 
@@ -205,27 +191,73 @@ const styles = {
 };
 export default function Home() {
   const { push, replace } = useRouter();
+
+  // const { data: categoryList } = useQuery({
+  //   queryFn: () => builder.use().user.categories(),
+  //   queryKey: builder.user.categories.get(),
+  //   // select: ({}) =>
+  // });
+  console.log();
+  const [user, setuser] = usePortal.atom(userAtom);
+  const { data: courseList, isLoading } = useQuery({
+    queryFn: () => builder.use().resources.courses.fetch(),
+    queryKey: builder.resources.courses.fetch.get(),
+    select: ({ data }) => data,
+  });
+
+  const { data: articleList, isLoading: articleLoading } = useQuery({
+    queryFn: () => builder.use().resources.courses.fetch(),
+    queryKey: builder.resources.courses.fetch.get(),
+    select: ({ data }) => data,
+  });
+
+  const { data: mentorLists, isFetching } = useQuery({
+    queryFn: () => builder.use().mentors.mentors_list(),
+    queryKey: builder.mentors.mentors_list.get(),
+    select: ({ data }) => data,
+  });
+
+  const statistics = [
+    {
+      name: "10K +",
+      text: "Active Menteees",
+    },
+
+    {
+      name: (courseList?.length ?? 0) + (articleList?.length ?? 0),
+      text: "Resources",
+    },
+    {
+      name: mentorList?.length ?? 0,
+      text: "Mentors",
+    },
+    {
+      name: "3",
+      text: "Active Months",
+    },
+  ];
+
   return (
     <section>
       <section className="h-[520px] flex items-center bg-[url(/hero-bg-image.png)] bg-cover bg-center bg-no-repeat">
-        <div className="flex max-w-[1400px] mx-auto items-center pl-[60px] justify-between">
+        <div className="flex max-w-[1400px] mx-auto items-center pl-[60px] justify-between max-[941px]:flex-col">
           <div className="flex flex-col gap-8">
             <div className="flex gap-3 flex-col">
               <div className="flex flex-col gap-1">
-                <span className="inline-flex font-medium text-[40px] leading-[60px] items-end gap-1">
+                <span className="inline-flex font-medium text-[40px] leading-[60px] items-end gap-1 max-[941px]:hidden">
                   Unlock Your <HeroText />
                 </span>
-                <span className="font-medium text-[40px] leading-[60px]">
+                <span className="font-medium text-[clamp(32px,2.7vw,40px)] ">
                   Find <span className="font-bold">Your Mentor</span> Today{" "}
                 </span>
               </div>
-              <p className="text-[18px] leading-[28.8px] text-[#6D6C80]">
+              <p className="text-[clamp(14px,1vw,18px)] leading-[28.8px] text-[#6D6C80]">
                 Dream big with mentors to help guide your way.
               </p>
             </div>
             <Button
-            component={Link}
-            href="/create-account"
+              component={Link}
+              href="./create-account"
               styles={{
                 root: {
                   boxShadow: "4px 6px 0px 0px #7630F7",
@@ -397,9 +429,8 @@ export default function Home() {
           </h3>
         </div>
 
-
-        <section className=" ">
-          <Carousel
+        <section className="flex w-full gap-4 overflow-x-scroll">
+          {/* <Carousel
             styles={{
               root: {
                 display: "flex",
@@ -422,80 +453,16 @@ export default function Home() {
             // slidesToScroll={4}
             align="start"
           >
-            {carouselList.map((item) => (
+            {courseList?.map((item) => (
               <Carousel.Slide styles={{}}>
-                <Link
-                  href="/resources"
-                  className=" p-[clamp(12px,1.8vw,26px)] flex flex-col gap-[clamp(10px,1.4vw,20px)] bg-white rounded-lg"
-                >
-                  <figure className=" w-[clamp(200px,19vw,278px)] ">
-                    <Image
-                      src={item.img}
-                      width={20}
-                      height={20}
-                      alt="laravel img"
-                      className="w-full "
-                    />
-                  </figure>
-                  <section className=" flex flex-col gap-[22px] ">
-                    <div className=" flex justify-between items-center">
-                      <article className=" py-[7px] px-[13px] bg-[#EFEFF2] rounded-[50px]">
-                        <p className=" text-[#161439] text-[13px] font-medium">
-                          {item?.skill}
-                        </p>
-                      </article>
-                      <article className=" flex gap-1 items-center ">
-                        <FaStar size={14} color="#F8BC24" />
-                        <p className=" text-[#7F7E97] font-normal text-[14px]">
-                          (4.5 Reviews)
-                        </p>
-                      </article>
-                    </div>
-                    <div className=" flex flex-col gap-[23px] ">
-                      <section className=" flex flex-col gap[14px]">
-                        <h3 className=" text-[18px] font-semibold">
-                          {item.details}
-                        </h3>
-                        <p className=" text-[#6D6C80] text-[15px] font-normal">
-                          By{" "}
-                          <span className=" text-[15px] font-normal text-[#161439]">
-                            {item.name}
-                          </span>
-                        </p>
-                      </section>
-
-                      <section className=" flex gap-[30px] items-center ">
-                        <Button
-                          component={Link}
-                          href={`/mentors/${item.id}`}
-                          styles={{
-                            root: {
-                              background: "#4B0082",
-                              height: "49px",
-                              paddingInline: "32px",
-                              borderRadius: "50px",
-                              width: "fit-content",
-                            },
-                          }}
-                        >
-                          <span className="flex items-center text-base font-semibold leading-[17.92px] text-white gap-1">
-                            Enroll Now
-                            <ArrowRight size={14} color="white" />
-                          </span>
-                        </Button>
-                        <p className=" text-[#5751E1] font-bold text-[20px] whitespace-nowrap">
-                          12,000 NGN
-                        </p>
-                      </section>
-                    </div>
-                  </section>
-                </Link>
+                
               </Carousel.Slide>
             ))}
-          </Carousel>
-         </section>
-
-        
+          </Carousel> */}
+          {courseList?.map((item, idx) => (
+            <CourseCard {...item} />
+          ))}
+        </section>
       </section>
 
       {/* Subscribe Now Section */}
@@ -595,11 +562,11 @@ export default function Home() {
         </div>
 
         <section className=" grid grid-cols-2 gap-[35px] ">
-          {skilledMentors.map((item) => (
+          {mentorLists?.map((item) => (
             <div key={item.id} className=" flex gap-[15px] items-center">
               <figure className="w-[235px] min-w-[166px] ">
                 <Image
-                  src={item.img}
+                  src={""}
                   alt="mentors-images"
                   width={100}
                   height={100}
@@ -613,7 +580,7 @@ export default function Home() {
                       {item.name}
                     </h4>
                     <p className=" text-[16px] text-lilac font-normal">
-                      {item.skill}
+                      {item.industry}
                     </p>
                   </article>
                   <article className=" flex gap-[5px] items-center">
@@ -624,7 +591,7 @@ export default function Home() {
                     </p>
                   </article>
                 </section>
-                <div className=" flex gap-2 items-center">
+                {/* <div className=" flex gap-2 items-center">
                   <article className=" py-[8px] px-[11px] w-[36px] h-[36px] rounded-full border-[#9292B4] border items-center flex text-shadow">
                     <FaFacebookF color="#7F7E97" size={20} />
                   </article>
@@ -640,7 +607,7 @@ export default function Home() {
                   <article className=" py-[8px] px-[11px] w-[36px] h-[36px] rounded-full border-[#9292B4] border  items-center flex text-shadow">
                     <FaYoutube color="#7F7E97" size={20} />
                   </article>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
@@ -694,10 +661,7 @@ export default function Home() {
               </h4>
             </div>
 
-           
-            <AccordionSection/>
-
-
+            <AccordionSection />
           </section>
         </section>
       </section>
@@ -743,6 +707,10 @@ export default function Home() {
                 enhancing your career
               </p>
 
+              {/* {!user?.isVerified 
+
+
+} */}
               <Button
                 href="/create-account/details"
                 component={Link}
@@ -783,6 +751,7 @@ export default function Home() {
                 Join millions of people from around the world to seek guidance
                 and grow together.
               </p>
+
               <Button
                 href="/create-account/details?view=mentee"
                 component={Link}
@@ -821,43 +790,9 @@ export default function Home() {
             Our Latest News Feed
           </h3>
         </div>
-        <section className=" flex gap-[20px] ">
-          {blogs.map((item) => (
-            <div className=" px-[clamp(12px,1.8vw,26px)] py-[21px] flex flex-col gap-[clamp(11px,1.8vw,24px)] border-[#6D6C80] border rounded-[10px] bg-white items-center">
-              <article className=" relative">
-                <figure className=" w-[clamp(200px,19vw,278px)] ">
-                  <Image
-                    src={item.img}
-                    width={20}
-                    height={20}
-                    alt="laravel img"
-                    className="w-full "
-                  />
-                </figure>
-                <span className="rounded-[30px] bg-[#4B0082] px-[14px] py-[8px] font-medium text-[13px] leading-[25.92px] text-[#fff] absolute top-3 left-2">
-                  {item.tag}
-                </span>
-              </article>
-              <section className=" flex flex-col gap-[22px] flex-1 ">
-                <div className=" flex gap-[14px]  items-center">
-                  <article className=" flex gap-[3px] items-center">
-                    <CiCalendar size={20} color="#4B0082" />
-                    <p className=" text-[#161439] text-[13px] font-medium">
-                      20 July, 2024
-                    </p>
-                  </article>
-                  <article className=" flex gap-1 items-center ">
-                    <CgProfile size={20} color="#4B0082" />
-                    <p className=" text-[#6D6C80] text-[14px] font-medium">
-                      By Admin
-                    </p>
-                  </article>
-                </div>
-                <p className=" text-[#161439] font-bold text-[20px]">
-                  {item?.datails}
-                </p>
-              </section>
-            </div>
+        <section className=" flex w-full overflow-x-scroll gap-[20px] ">
+          {articleList?.map((item, idx) => (
+            <ArticleCard key={idx} {...item} />
           ))}
         </section>
       </section>

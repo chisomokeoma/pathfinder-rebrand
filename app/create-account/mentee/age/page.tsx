@@ -4,9 +4,17 @@ import { Button, LoadingOverlay } from "@mantine/core";
 import Hero from "@/components/home/hero";
 import { Suspense, useState } from "react";
 import AgeAction from "@/components/mentee/age-action";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import classes from "@/components/home/signup.module.css";
+import { base64decode, base64encode } from "nodejs-base64";
+import { Age } from "@/types";
 
 export default function MenteeAge() {
-  const [age, setAge] = useState<"below18" | "above18" | "">("");
+  const [age, setAge] = useState<Age>(Age.ABOVE_18);
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role");
+  // const span = searchParams.get('span')
 
   return (
     <section className="flex flex-col">
@@ -23,13 +31,13 @@ export default function MenteeAge() {
           </div>
           <div className="flex flex-col gap-[57px]">
             <Button
-              onClick={() => setAge("below18")}
+              onClick={() => setAge(Age.UNDER_18)}
               style={{
                 height: "56px",
                 borderRadius: "30px",
-                background: age === "below18" ? "#4B0082" : "#DAD4FF",
+                background: age === Age.UNDER_18 ? "#4B0082" : "#DAD4FF",
                 width: "100%",
-                color: age === "below18" ? "white" : "black",
+                color: age === Age.UNDER_18 ? "white" : "black",
               }}
               styles={{
                 inner: {
@@ -40,22 +48,53 @@ export default function MenteeAge() {
               <span className="font-bold text-[24px] leading-6">Below 18</span>
             </Button>
             <Button
-              onClick={() => setAge("above18")}
+              onClick={() => setAge(Age.ABOVE_18)}
               style={{
                 height: "56px",
                 borderRadius: "30px",
-                background: age === "above18" ? "#4B0082" : "#DAD4FF",
+                background: age === Age.ABOVE_18 ? "#4B0082" : "#DAD4FF",
                 width: "100%",
-                color: age === "above18" ? "white" : "black",
+                color: age === Age.ABOVE_18 ? "white" : "black",
               }}
             >
               <span className="font-bold text-[24px] leading-6">Above 18</span>
             </Button>
           </div>
 
-          <Suspense>
-            <AgeAction />
-          </Suspense>
+          <div className="flex flex-col gap-7">
+            <Link
+              className={
+                !age
+                  ? "pointer-events-none cursor-not-allowed w-full"
+                  : "w-full"
+              }
+              // href={`/create-account/otp?auth=${auth}`}
+              href={`/create-account/details?role=${role}&span=${base64encode(
+                age
+              )}}`}
+            >
+              <Button
+                disabled={!age}
+                classNames={classes}
+                styles={{
+                  root: {
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                Proceed
+              </Button>
+            </Link>
+            <p className="text-base self-center leading-7 text-[#6D6C80]">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-[#5751E1] text-base leading-7 underline"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
         </article>
       </div>
       <LoadingOverlay />

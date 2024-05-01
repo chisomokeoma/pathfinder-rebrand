@@ -36,11 +36,11 @@ function Hero({ text, route }: IWrapper) {
           </div>
         </article>
 
-        <Image
+        <Image 
           src="/illustration.png"
           width={600}
           height={600}
-          className="h-full w-[262px] object-cover"
+          className="h-full flex w-[262px] object-cover max-[370px]:hidden "
           alt="illustration"
         />
       </div>

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { Modal } from "@mantine/core";
-import { ReactNode, createContext, useState } from "react";
+import { Context, ReactNode, createContext, useState } from "react";
 
 export interface IModalContext {
   setModalState: React.Dispatch<React.SetStateAction<IModalState>>;
@@ -18,7 +18,9 @@ interface IModalState {
   overflow?: "unset" | "auto";
 }
 
-export const ModalContext = createContext<IModalContext | null>(null);
+export const ModalContext = createContext<IModalContext | null>(
+  null
+) as Context<IModalContext>;
 const initialvalues: IModalState = {
   opened: false,
   component: null,

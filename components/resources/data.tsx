@@ -1,33 +1,31 @@
 import { Button } from "../ui/button";
 import { MdArrowRightAlt } from "react-icons/md";
-import img1 from '@/public/images/course.png'
-import img3 from "@/public/images/marketing.png"
-import img2 from "@/public/images/Ai.png"
-import img4 from "@/public/images/Finacial.png"
+import img1 from "@/public/images/course.png";
+import img3 from "@/public/images/marketing.png";
+import img2 from "@/public/images/Ai.png";
+import img4 from "@/public/images/Finacial.png";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { StaticImageData } from "next/image";
 
- interface CateProps {
+interface CateProps {
   title: string;
   num: number;
   // button: Element
   id: number;
 }
 
-interface ResourcesProps{
-    id: number;
-    img:StaticImageData,
-    tag: string,
-     review: number,
-     desc: string,
-     by:string,
-     foot:JSX.Element
+interface ResourcesProps {
+  id: number;
+  img: StaticImageData;
+  tag: string;
+  review: number;
+  desc: string;
+  by: string;
+  foot: JSX.Element;
 }
 
-
 export const ResourcesData: ResourcesProps[] = [
-    
   {
     id: 0,
     img: img1,
@@ -36,17 +34,17 @@ export const ResourcesData: ResourcesProps[] = [
     desc: "Learning Javascript With Imagination",
     by: "Ngozi Onwuka",
     foot: (
+      <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
 
-      <div className="flex justify-between  items-center">
-        <Button className="rounded-3xl flex gap-2" asChild>
-            <Link href="/resources/details">
-            Enrol Now <MdArrowRightAlt />
-            </Link>
+      // <div className="flex justify-between  items-center">
+      //   <Button className="rounded-3xl flex gap-2" asChild>
+      //       <Link href="/resources/details">
+      //       Enrol Now <MdArrowRightAlt />
+      //       </Link>
 
-        
-        </Button>
-        <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
-      </div>
+      //   </Button>
+      //   <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
+      // </div>
     ),
   },
   {
@@ -61,7 +59,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">9,990 NGN</span>
+      <span className="text-blue-700 capitalize">9,990 NGN</span>
       // </div>
     ),
   },
@@ -73,13 +71,12 @@ export const ResourcesData: ResourcesProps[] = [
     desc: "Learning Digital Marketing on Facebook",
     by: "Ngozi Onwuka",
     foot: (
-        
       // <div className="flex justify-between items-center">
-        
+
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">14,000 NGN</span>
+      <span className="text-blue-700 capitalize">14,000 NGN</span>
       // </div>
     ),
   },
@@ -95,11 +92,11 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">20,000 NGN</span>
+      <span className="text-blue-700 capitalize">20,000 NGN</span>
       // </div>
     ),
   },
- 
+
   {
     id: 4,
     img: img1,
@@ -112,7 +109,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
+      <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
       // </div>
     ),
   },
@@ -128,7 +125,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-1">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">9,990 NGN</span>
+      <span className="text-blue-700 capitalize">9,990 NGN</span>
       // </div>
     ),
   },
@@ -144,7 +141,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">14,000 NGN</span>
+      <span className="text-blue-700 capitalize">14,000 NGN</span>
       // </div>
     ),
   },
@@ -160,7 +157,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">20,000 NGN</span>
+      <span className="text-blue-700 capitalize">20,000 NGN</span>
       // </div>
     ),
   },
@@ -176,7 +173,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
+      <span className="text-blue-700 capitalize font-bold">12,000 NGN</span>
       // </div>
     ),
   },
@@ -192,7 +189,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">9,990 NGN</span>
+      <span className="text-blue-700 capitalize">9,990 NGN</span>
       // </div>
     ),
   },
@@ -208,7 +205,7 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2">
       //     Enrol Now <MdArrowRightAlt />
       //   </Button>
-        <span className="text-blue-700 capitalize">14,000 NGN</span>
+      <span className="text-blue-700 capitalize">14,000 NGN</span>
       // </div>
     ),
   },
@@ -224,11 +221,10 @@ export const ResourcesData: ResourcesProps[] = [
       //   <Button className="rounded-3xl flex gap-2 ">
       //     Enrol Now <MdArrowRightAlt/>
       //   </Button>
-        <span className="text-blue-700 capitalize">20,000 NGN</span>
+      <span className="text-blue-700 capitalize">20,000 NGN</span>
       // </div>
     ),
   },
- 
 ];
 
 export const Cates: CateProps[] = [
@@ -269,27 +265,25 @@ export const Cates: CateProps[] = [
   },
 ];
 
-
-export const Instructors:CateProps[] = [
-    {
-        title: "Ngozi Onwuka",
-        num: 10,
-        id: 1,
-      },
-      {
-        title: "Olamide Adeyemi",
-        num: 13,
-        id: 2,
-      },
-      {
-        title: "Uche Eze",
-        num: 22,
-        id: 3,
-      },
-      {
-        title: "Mohammed Ali",
-        num: 42,
-        id: 4,
-      },
-    
-]
+export const Instructors: CateProps[] = [
+  {
+    title: "Ngozi Onwuka",
+    num: 10,
+    id: 1,
+  },
+  {
+    title: "Olamide Adeyemi",
+    num: 13,
+    id: 2,
+  },
+  {
+    title: "Uche Eze",
+    num: 22,
+    id: 3,
+  },
+  {
+    title: "Mohammed Ali",
+    num: 42,
+    id: 4,
+  },
+];

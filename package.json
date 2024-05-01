@@ -13,12 +13,18 @@
   "dependencies": {
     "@ibnlanre/portal": "2.3.1",
     "@mantine/carousel": "^7.8.0",
-    "@mantine/core": "^7.8.0",
+    "@mantine/core": "^7.8.1",
     "@mantine/dates": "^7.8.0",
     "@mantine/form": "^7.8.0",
-    "@mantine/hooks": "^7.8.0",
+    "@mantine/hooks": "^7.8.1",
+    "@mantine/tiptap": "^7.8.1",
     "@radix-ui/react-avatar": "^1.0.4",
     "@tanstack/react-query": "4.33.0",
+    "@tiptap/extension-link": "^2.3.1",
+    "@tiptap/extension-placeholder": "^2.3.1",
+    "@tiptap/pm": "^2.3.1",
+    "@tiptap/react": "^2.3.1",
+    "@tiptap/starter-kit": "^2.3.1",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -38,7 +44,8 @@
     "react-icons": "^5.0.1",
     "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "webpack": "^5.91.0"
   },
   "devDependencies": {
     "@types/node": "^20",

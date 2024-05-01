@@ -79,7 +79,7 @@ const LatestBlogs = () => {
             <li key={cat._id} className="flex gap-4 items-center">
               <Link href="/" className="flex gap-4 items-center group">
                 <Image
-                  src={cat.image?.filePath.replace("../public", "")}
+                  src={cat.image?.filePath.replace("../public", "" ) ?? ""}
                   width={100}
                   height={100}
                   alt="blog"

@@ -1,4 +1,5 @@
 "use client";
+
 import { TextInput } from "@mantine/core";
 import React from "react";
 
@@ -9,13 +10,16 @@ import GoogleIIcon from "@/components/icons/google-icon";
 import FacebookIcon from "@/components/icons/facebook-icon";
 import AppleIcon from "@/components/icons/apple-icon";
 import { useForm } from "@mantine/form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { useSearchParams } from "next/navigation";
+import { ErrorType, errorMessageHandler } from "@/utils/error-handler";
+import { cookieStorage, usePortal } from "@ibnlanre/portal";
+import { refetchUserDetails } from "@/api/queries-store";
 
 export interface ILogin {
-  name: string;
   password: string;
   email: string;
 }
@@ -35,27 +39,36 @@ const styles = {
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
+  const { push } = useRouter();
 
   const loginForm = useForm({
     initialValues: {
-      name: "",
       email: "",
       password: "",
     },
   });
 
-  const { mutate } = useMutation({
-    mutationFn: () =>
-      view === "mentor"
-        ? builder.use().authentication.login_mentee(loginForm?.values)
-        : builder.use().authentication.login_mentor(loginForm.values),
-    mutationKey: builder.authentication.login_mentee.get(),
-    onSuccess(data, variable) {
-      console.log(data);
-      toast.success("Login successful");
-      //  cookieStorage.setItem('')
+  const queryClient = useQueryClient()
+  const [refetch, setrefetch] = usePortal.atom(refetchUserDetails)
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: () => builder.use().authentication.signin(loginForm.values),
+    onSuccess(data) {
+      // queryClient.fetchQuery(builder.user.user_details.get())
+      cookieStorage.setItem('pathfinder-auth', data?.data?.access_token)
+      setrefetch(true)
+      if (data?.data?.isVerified) {
+        toast.success("Loggedin successfully");
+        push("/");
+      } else {
+        push(`/otp`);
+      }
+    },
+    onError(error) {
+      errorMessageHandler(error as ErrorType);
     },
   });
+
   return (
     <form
       className="w-[413px] mx-auto"
@@ -64,21 +77,17 @@ export default function LoginForm() {
       <div className="flex gap-10 pt-6 flex-col">
         <TextInput
           styles={styles}
-          placeholder="Name"
-          {...loginForm.getInputProps("name")}
+          placeholder="Email"
+          {...loginForm.getInputProps("email")}
         />
         <PasswordInput
           styles={styles}
           placeholder="Passsword"
           {...loginForm.getInputProps("password")}
         />
-        <TextInput
-          styles={styles}
-          placeholder="Email"
-          {...loginForm.getInputProps("email")}
-        />
+
         {/* <Link className="w-full mt-20" href=''> */}
-        <Button classNames={classes} type="submit">
+        <Button loading={isLoading} classNames={classes} type="submit">
           Sign In
         </Button>
         {/* </Link> */}
