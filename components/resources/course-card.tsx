@@ -1,7 +1,7 @@
 import { CourseDetailsResponse, MentorDetailsResources } from "@/types";
 import React from "react";
 
-export default function CourseCard(props: any) {
+export function CourseCard(props: any) {
   return (
     <div className="w-[330px] h-[454px] rounded-[5px] border-2 shadow-xl flex flex-col">
       <div className="w-[278px] h-[190px] mx-auto mt-[10px]">

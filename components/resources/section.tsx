@@ -22,7 +22,7 @@ import { userAtom } from "@/api/queries-store";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { FaStar } from "react-icons/fa";
-import ListSkeleton from "../skeletons/list-skeleton";
+import { ListSkeleton } from "../skeletons/list-skeleton";
 
 export default function Sections() {
   const num = 100;

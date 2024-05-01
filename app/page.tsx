@@ -33,8 +33,8 @@ import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { usePortal } from "@ibnlanre/portal";
 import { userAtom } from "@/api/queries-store";
-import ArticleCard from "@/components/resources/article-card";
-import CourseCard from "@/components/resources/course-card";
+import {ArticleCard} from "@/components/resources/article-card";
+import {CourseCard} from "@/components/resources/course-card";
 import { ResourceType } from "@/types";
 
 const items = [

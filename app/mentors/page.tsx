@@ -3,7 +3,7 @@
 import { builder } from "@/api/builder";
 import { userAtom } from "@/api/queries-store";
 import Hero from "@/components/home/hero";
-import ListSkeleton from "@/components/skeletons/list-skeleton";
+import { ListSkeleton } from "@/components/skeletons/list-skeleton";
 import { usePortal } from "@ibnlanre/portal";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";

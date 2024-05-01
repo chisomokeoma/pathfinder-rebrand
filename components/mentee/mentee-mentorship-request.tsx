@@ -28,7 +28,7 @@ const containerList = [
   },
 ];
 
-export default function MenteeMentorshipRequest() {
+export function MenteeMentorshipRequest() {
   const { data: requestList, isFetching } = useQuery({
     queryFn: () =>
       builder.use().mentors.mentorship_requests.pending_mentorship_requests(),

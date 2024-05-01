@@ -3,7 +3,7 @@ import React from "react";
 import { CgProfile } from "react-icons/cg";
 import { CiCalendar } from "react-icons/ci";
 
-export default function ArticleCard(props: any) {
+export function ArticleCard(props: any) {
   return (
     <div className="flex w-[337.5px] h-[395px] shadow-xl border-2 rounded-[5px] flex-col">
       <div className="w-[285.5px] h-[224px] mx-auto mt-[10px]">

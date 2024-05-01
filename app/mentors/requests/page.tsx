@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
 import { userAtom } from "@/api/queries-store";
-import MenteeMentorshipRequest from "@/components/mentee/mentee-mentorship-request";
-import MentorRequestBtn from "@/components/mentors/mentor-request-btn";
-import MentorsMentorshipRequest from "@/components/mentors/mentors-mentorship-request";
+import { MenteeMentorshipRequest } from "@/components/mentee/mentee-mentorship-request";
+import {MentorsMentorshipRequest} from "@/components/mentors/mentors-mentorship-request";
 import { RequestStatus, UserRole } from "@/types";
 import { usePortal } from "@ibnlanre/portal";
 
