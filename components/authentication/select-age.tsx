@@ -1,3 +1,5 @@
+"use client"
+
 import Hero from "@/components/home/hero";
 import { Age } from "@/types";
 import { Button, LoadingOverlay } from "@mantine/core";
