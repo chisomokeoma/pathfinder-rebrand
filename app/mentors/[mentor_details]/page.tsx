@@ -6,8 +6,8 @@ import Hero from "@/components/home/hero";
 import ProfileUpdate from "@/components/modals/profile-update";
 import RequestMentorShipModal from "@/components/modals/request-mentorship-modal";
 import { ModalContext } from "@/components/provider/modal-provider";
-import ArticleCard from "@/components/resources/article-card";
-import CourseCard from "@/components/resources/course-card";
+import { ArticleCard } from "@/components/resources/article-card";
+import { CourseCard } from "@/components/resources/course-card";
 import { RequestStatus, ResourceType, UserRole } from "@/types";
 import { usePortal } from "@ibnlanre/portal";
 import { LoadingOverlay } from "@mantine/core";
@@ -15,9 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { CgProfile } from "react-icons/cg";
-import { CiCalendar } from "react-icons/ci";
-import { FaStar } from "react-icons/fa";
 
 function Mentorsdetails({ params }: { params: { mentor_details: string } }) {
   const breadCrumbs = [{ text: "Home" }, { text: "Mentors" }];
