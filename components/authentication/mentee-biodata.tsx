@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import classes from "@/components/home/signup.module.css";
 import { useForm } from "@mantine/form";
@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { base64decode } from "nodejs-base64";
 import toast from "react-hot-toast";
+import { errorMessageHandler, ErrorType } from "@/utils/error-handler";
 
 export interface IMenteeBiodata {
   name: string;
@@ -23,7 +24,6 @@ export interface IMenteeBiodata {
   location: string;
   institution: string;
   skills: string[];
-  parentEmail: string;
 }
 
 const styles = {
@@ -45,15 +45,14 @@ export default function MenteeBiodata() {
       name: "",
       gender: "",
       location: "",
-      institution: " ",
+      institution: "",
       skills: [],
-      parentEmail: "",
     },
   });
 
   const searchParams = useSearchParams();
   const auth = searchParams.get("auth");
-  const {push } = useRouter()
+  const { push } = useRouter();
 
   // const { mutate } = useMutation({
   //   mutationFn: (payload: IMenteeBio) =>
@@ -74,7 +73,10 @@ export default function MenteeBiodata() {
         mutatePicture(formData);
       }
       toast.success(`Mentee account created successfully`);
-      push(`/`)
+      push(`/`);
+    },
+    onError(error, variables, context) {
+      errorMessageHandler(error as ErrorType);
     },
   });
 
@@ -82,8 +84,9 @@ export default function MenteeBiodata() {
     mutationFn: (payload: FormData) =>
       builder.use().user.upload_profile_picture(payload),
   });
-
+  
   const [img, setImg] = useState<File | null>(null);
+
   return (
     <form
       className="flex flex-col gap-[65.8px]"

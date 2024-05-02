@@ -1,7 +1,7 @@
 import Hero from "@/components/home/hero";
 import ReceiverComment from "@/components/messages/receiver-comment";
 import SenderComment from "@/components/messages/sender-comment";
-import { Avatar } from "@mantine/core";
+import { Avatar, TextInput } from "@mantine/core";
 import React from "react";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaVideo } from "react-icons/fa";
@@ -40,6 +40,18 @@ const messagesList = [
   },
 ];
 
+const styles = {
+  root: {
+    width: "100%",
+  },
+  input: {
+    height: "50px",
+    borderRadius: "8px",
+    border: "0.93px solid #2C2B2B",
+    width: "100%",
+    paddingLeft: "14px",
+  },
+};
 export default function Messages() {
   return (
     <section className=" flex flex-col gap-[clamp(40px,5.6px,81px)] overflow-auto  h-screen ">
@@ -90,8 +102,14 @@ export default function Messages() {
             <div className=" flex flex-col p-[20px] ">
                 <SenderComment/>
                 <ReceiverComment/>
+                
 
             </div>
+            <TextInput
+                
+                  placeholder="Type a message"
+                  styles={styles}
+                />
             </section>
           </div>
         </section>

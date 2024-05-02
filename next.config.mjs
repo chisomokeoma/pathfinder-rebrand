@@ -11,6 +11,12 @@ images: {
       hostname: "pathfinder-c03g.onrender.com",
       port: "",
       pathname: "/public/**"
+    },
+    {
+      protocol: "https",
+      hostname: "res.cloudinary.com",
+      port: "",
+      pathname: "/dc0zfjjea/**"
     }
   ]
 },

@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import Hero from "@/components/home/hero";
 import { Age } from "@/types";
 import { Button, LoadingOverlay } from "@mantine/core";
-import { Link } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { base64encode } from "nodejs-base64";
 import React, { useState } from "react";
 import classes from "@/components/home/signup.module.css";
+import Link from "next/link";
 
 function SelectAge() {
   const [age, setAge] = useState<Age>(Age.ABOVE_18);
@@ -68,7 +68,7 @@ function SelectAge() {
               // href={`/create-account/otp?auth=${auth}`}
               href={`/create-account/details?role=${role}&span=${base64encode(
                 age
-              )}}`}
+              )}`}
             >
               <Button
                 disabled={!age}

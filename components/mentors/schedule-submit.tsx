@@ -15,6 +15,7 @@ import { errorMessageHandler, ErrorType } from "@/utils/error-handler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 const sessionArray = [
   "Goal Setting",
   "Career Advice",
@@ -220,9 +221,9 @@ export default function ScheduleSubmit({
             onClick={() =>
               mutate({
                 ...form.values,
-                dateScheduled: (
-                  form.values.dateScheduled as Date
-                ).toISOString(),
+                dateScheduled: dayjs(form.values.dateScheduled as Date).format(
+                  "YYYY-MM-DD"
+                ),
                 duration: form.values.duration
                   ? durationType === TimeType.HR
                     ? form.values.duration * 60

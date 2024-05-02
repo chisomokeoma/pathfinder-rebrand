@@ -1,9 +1,9 @@
 "use client";
 
-import { Avatar, Button, Menu, Popover, Text } from "@mantine/core";
+import { Avatar, Button, FileInput, Menu, Popover, Text } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { TbCategoryPlus } from "react-icons/tb";
@@ -14,6 +14,7 @@ import { builder } from "@/api/builder";
 import { cookieStorage, usePortal } from "@ibnlanre/portal";
 import { refetchUserDetails, userAtom } from "@/api/queries-store";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const navArray = [
   { name: "Home", link: "/", dropDown: <IoIosArrowDown /> },
@@ -44,33 +45,52 @@ const navArray = [
     ),
   },
 
-  { name: "Blog", link: "" },
+  { name: "Blog", link: "/blogs" },
   { name: "Messages", link: "/messages" },
 ];
 export default function NavBar() {
-  
   const [user, setUser] = usePortal.atom(userAtom);
-  const auth = cookieStorage.getItem("pathfinder-auth")
-  const [refetch, setrefetch] = usePortal.atom(refetchUserDetails)
-
+  const auth = cookieStorage.getItem("pathfinder-auth");
+  const [refetch, setrefetch] = usePortal.atom(refetchUserDetails);
 
   const { data: userDetails } = useQuery({
     queryFn: () => builder.use().user.user_details(),
     queryKey: [...builder.user.user_details.get(), refetch],
     select: ({ data }) => data,
-    enabled: !!auth
+    enabled: !!auth,
   });
 
   useEffect(() => {
     if (userDetails) {
       setUser(userDetails);
-      setrefetch(false)
+      setrefetch(false);
     }
   }, [userDetails]);
 
   console.log({ user });
   console.log(user?.profilePicture, "profile");
   const { push } = useRouter();
+
+  const [img, setImg] = useState<File | null>(null);
+
+  const uploadPicture = (payload: FormData) => {
+    toast.promise(builder.use().user.upload_profile_picture(payload), {
+      loading: "Uploading profile picture...",
+      success: () => {
+        location.reload();
+        return "Success";
+      },
+      error: "Error uploading profile picture",
+    });
+  };
+
+  useEffect(() => {
+    if (img) {
+      const formData = new FormData();
+      formData.append("profile_picture", img);
+      uploadPicture(formData);
+    }
+  }, [img]);
   return (
     <nav className="py-[11px] sticky top-0 bg-white w-full z-10">
       <div className="flex items-center max-w-[1400px] mx-auto px-4 justify-between">
@@ -89,7 +109,6 @@ export default function NavBar() {
             {navArray.map((item, index) => (
               <div key={index} className=" flex gap-[10px] ">
                 <Link
-                  
                   href={item.link}
                   className=" flex items-center cursor-pointer"
                 >
@@ -181,29 +200,43 @@ export default function NavBar() {
 
             {user?.isVerified ? (
               <div className="flex items-center">
-                <Popover width={150} position="bottom" withArrow shadow="md">
+                <Popover
+                  width="fit-content"
+                  position="bottom"
+                  withArrow
+                  shadow="md"
+                >
                   <Popover.Target>
-                      <img
-                        width={100}
-                        height={100}
-                        alt="profile picture"
-                        src={user?.profilePicture ?? ""}
-                        className=" cursor-pointer w-10 rounded-full h-10"
-                      />
+                    <Avatar
+                      size={40}
+                      radius="xl"
+                      alt="profile picture"
+                      src={user?.profilePicture ?? ""}
+                      className=" cursor-pointer"
+                    />
                   </Popover.Target>
-                  <Popover.Dropdown
-                    
-                  >
+                  <Popover.Dropdown>
                     <h3 className="whitespace-nowrap">{user?.name}</h3>
                     <p>{user?.role}</p>
-                    <p onClick={() => {
-                      location.href = "/"
-                      cookieStorage.clear();
-                    }} className=" text-[18px] font-semibold text-purple cursor-pointer">
-                      {" "}
+                    <label htmlFor="profile-input" className=" text-[18px] font-semibold text-purple cursor-pointer">
+                      Change Image
+                    </label>
+                    <FileInput
+                      id="profile-input"
+                      value={img}
+                      onChange={setImg}
+                      className="hidden"
+                      accept="image/png,image/jpeg"
+                    />
+                    <p
+                      onClick={() => {
+                        location.href = "/";
+                        cookieStorage.clear();
+                      }}
+                      className=" text-[18px] font-semibold text-purple cursor-pointer"
+                    >
                       Log Out
                     </p>
-
                   </Popover.Dropdown>
                 </Popover>
               </div>

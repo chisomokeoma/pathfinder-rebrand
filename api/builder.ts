@@ -19,6 +19,7 @@ import { IMentorBiodata } from "@/components/mentors/mentor-biodata";
 import { ILogin } from "@/components/authentication/login-form";
 import { IResource } from "@/components/resources/course-form";
 import { FormType } from "@/app/mentors/[mentor_details]/schedule-session/page";
+import { IArticle } from "@/components/blog/article-form";
 
 export const builder = createBuilder({
   authentication: {
@@ -46,7 +47,7 @@ export const builder = createBuilder({
       fetch: () => API.get<CourseDetailsResponse[]>(`api/courses`),
     },
     article: {
-      create: (data: IResource) =>
+      create: (data: IArticle) =>
         API.post<CourseResponse>(`api/articles`, data),
       fetch: () => API.get<CourseDetailsResponse[]>(`api/articles`),
     },

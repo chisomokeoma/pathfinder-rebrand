@@ -81,7 +81,7 @@ export default function MentorBiodata() {
     onSuccess(data) {
       const formData = new FormData();
       if (imgMentor) {
-        formData.append("profile_img", imgMentor);
+        formData.append("profile_picture", imgMentor);
       }
       toast.success("Mentor account created successfully");
       push(`/`);

@@ -63,6 +63,9 @@ function CreateForm() {
       // setUserEmail(data?.data?.email)
       push(`/create-account/otp?auth=${base64encode(createForm.values.email)}`);
     },
+    onError(error, variables, context) {
+      errorMessageHandler(error as ErrorType)
+    },
   });
 
   return (

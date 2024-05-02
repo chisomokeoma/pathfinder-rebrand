@@ -81,6 +81,7 @@ export interface CourseData {
 export interface CourseDetailsResponse {
   id: number;
   type: string;
+  content: string
   title: string;
   coverPhoto: null | string;
   category: string;
