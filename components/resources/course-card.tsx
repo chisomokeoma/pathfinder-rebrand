@@ -5,7 +5,7 @@ export function CourseCard(props: any) {
   return (
     <div className="w-[330px] h-[454px] rounded-[5px] border-2 shadow-xl flex flex-col">
       <div className="w-[278px] h-[190px] mx-auto mt-[10px]">
-        <img src="/pro.svg/" alt="" />
+        <img src={props?.coverPhoto} alt="" />
       </div>
       <div className="flex gap-[85px] mx-auto mt-[10px]">
         <span className="w-fit h-fit p-[2px] bg-[#EFEFF2] text-[#161439] rounded-[15px] text-[14px] text-center">
