@@ -90,7 +90,7 @@ function Mentors() {
                     <div className="w-[228.98px] h-[212.01px] rounded-[20px] mt-[18px] ml-[9.5px] flex">
                       <figure className=" w-[243px] ">
                         <Image
-                          src=""
+                          src={item?.profilePicture ?? ""}
                           alt="mentors-images"
                           width={20}
                           height={20}
@@ -113,16 +113,27 @@ function Mentors() {
                         (4.8 Ratings)
                       </p>
                     </article>
-                    <div className=" pt-[10px]">
-                      <button
-                        className="bg-purple w-[202px] h-[50px] rounded-[20px] text-[16px] text-white "
-                        onClick={() => push(`/mentors/${item.id}`)}
-                      >
-                        {user?.role === "MENTOR"
-                          ? " View Details "
-                          : " Request Mentorship"}
-                      </button>
-                    </div>
+                    {user ? (
+                      <div className=" pt-[10px]">
+                        <button
+                          className="bg-purple w-[202px] h-[50px] rounded-[20px] text-[16px] text-white "
+                          onClick={() => push(`/mentors/${item.id}`)}
+                        >
+                          {user?.role === "MENTOR"
+                            ? " View Details "
+                            : " Request Mentorship"}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className=" pt-[10px]">
+                        <button
+                          className="bg-purple w-[202px] h-[50px] rounded-[20px] text-[16px] text-white "
+                          onClick={() => push(`/mentors/${item.id}`)}
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

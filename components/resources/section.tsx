@@ -41,7 +41,7 @@ export default function Sections() {
     <React.Fragment>
       <main className="">
         <div className="flex justify-between items-center">
-          <span>Showing {num} Results</span>
+          <span>Showing {courseList?.length ?? 0} Results</span>
           <div className="flex gap-2 items-center">
             <span>Sort By:</span>
             <Select>

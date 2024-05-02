@@ -116,10 +116,12 @@ export default function NavBar() {
                     {item.name}
                   </p>
                 </Link>
-                <span className="pt-3  cursor-pointer ">
-                  {/* <IoIosArrowDown /> */}
-                  {item.dropDown}
-                </span>
+                {user ? (
+                  <span className="pt-3  cursor-pointer ">
+                    {/* <IoIosArrowDown /> */}
+                    {item.dropDown}
+                  </span>
+                ) : null}
               </div>
             ))}
           </div>
@@ -218,7 +220,10 @@ export default function NavBar() {
                   <Popover.Dropdown>
                     <h3 className="whitespace-nowrap">{user?.name}</h3>
                     <p>{user?.role}</p>
-                    <label htmlFor="profile-input" className=" text-[18px] font-semibold text-purple cursor-pointer">
+                    <label
+                      htmlFor="profile-input"
+                      className=" text-[18px] font-semibold text-purple cursor-pointer"
+                    >
                       Change Image
                     </label>
                     <FileInput

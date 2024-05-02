@@ -55,7 +55,7 @@ export const builder = createBuilder({
 
   mentors: {
     mentors_list: () => API.get<MentorsList[]>(`api/mentors`),
-    mentor_details_unauth: (id: string) => API.get(`api/mentors/${id}`),
+    mentor_details_unauth: (id: string) => API.get<MentorDetails>(`api/mentors/${id}`),
     mentor_details_auth: (id: string) =>
       API.get<MentorDetails>(`api/mentors/auth/${id}`),
     mentorship_requests: {

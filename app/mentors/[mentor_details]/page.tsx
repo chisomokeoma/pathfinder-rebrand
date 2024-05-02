@@ -23,8 +23,12 @@ function Mentorsdetails({ params }: { params: { mentor_details: string } }) {
 
   const { data: mentorDetails, isFetching } = useQuery({
     queryFn: () =>
-      builder.use().mentors.mentor_details_auth(params?.mentor_details),
-    queryKey: builder.mentors.mentor_details_auth.use(params?.mentor_details),
+      user
+        ? builder.use().mentors.mentor_details_auth(params?.mentor_details)
+        : builder.use().mentors.mentor_details_unauth(params?.mentor_details),
+    queryKey: user
+      ? builder.mentors.mentor_details_auth.use(params?.mentor_details)
+      : builder.mentors.mentor_details_unauth.use(params?.mentor_details),
     select: ({ data }) => data,
   });
   console.log(mentorDetails, "details");
@@ -65,48 +69,53 @@ function Mentorsdetails({ params }: { params: { mentor_details: string } }) {
               <div className="text-[#ffff] ">{mentorDetails?.headline}</div>
 
               <div>
-                {user?.role === UserRole.MENTEE ? (
-                  <div className=" flex  gap-[10px]">
-                    {mentorDetails?.status === RequestStatus.MENTOR_ACCEPTED ? (
-                      <button
-                        className="text-purple bg-white rounded-[20px] w-[202px] h-[50px]"
-                        onClick={() =>
-                          push(
-                            `/mentors/${params?.mentor_details}/schedule-session`
-                          )
-                        }
-                      >
-                        Schedule Session
-                      </button>
-                    ) : null}
+                {user ? (
+                  <>
+                    {user?.role === UserRole.MENTEE ? (
+                      <div className=" flex  gap-[10px]">
+                        {mentorDetails?.status ===
+                        RequestStatus.MENTOR_ACCEPTED ? (
+                          <button
+                            className="text-purple bg-white rounded-[20px] w-[202px] h-[50px]"
+                            onClick={() =>
+                              push(
+                                `/mentors/${params?.mentor_details}/schedule-session`
+                              )
+                            }
+                          >
+                            Schedule Session
+                          </button>
+                        ) : null}
 
-                    {mentorDetails?.status === RequestStatus.NOT_ACTIVE ? (
-                      <button
-                        className="text-white bg-lilac rounded-[20px] w-[202px] h-[50px]"
-                        onClick={() => {
-                          setModalState({
-                            opened: true,
-                            //    component: (<SuccessSchedule/>)
-                            component: (
-                              <RequestMentorShipModal
-                                id={params?.mentor_details}
-                              />
-                            ),
-                          });
-                        }}
-                      >
-                        Request Mentorship
-                      </button>
-                    ) : mentorDetails?.status ===
-                      RequestStatus.PENDING_REQUEST ? (
-                      <button
-                        className="text-white bg-lilac rounded-[20px] w-[202px] h-[50px]"
-                        disabled
-                      >
-                        Pending Request
-                      </button>
+                        {mentorDetails?.status === RequestStatus.NOT_ACTIVE ? (
+                          <button
+                            className="text-white bg-lilac rounded-[20px] w-[202px] h-[50px]"
+                            onClick={() => {
+                              setModalState({
+                                opened: true,
+                                //    component: (<SuccessSchedule/>)
+                                component: (
+                                  <RequestMentorShipModal
+                                    id={params?.mentor_details}
+                                  />
+                                ),
+                              });
+                            }}
+                          >
+                            Request Mentorship
+                          </button>
+                        ) : mentorDetails?.status ===
+                          RequestStatus.PENDING_REQUEST ? (
+                          <button
+                            className="text-white bg-lilac rounded-[20px] w-[202px] h-[50px]"
+                            disabled
+                          >
+                            Pending Request
+                          </button>
+                        ) : null}
+                      </div>
                     ) : null}
-                  </div>
+                  </>
                 ) : null}
               </div>
             </div>
