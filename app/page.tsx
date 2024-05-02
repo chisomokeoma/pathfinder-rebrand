@@ -566,7 +566,7 @@ export default function Home() {
             <div key={item.id} className=" flex gap-[15px] items-center">
               <figure className="w-[235px] min-w-[166px] ">
                 <Image
-                  src={""}
+                  src={item?.profilePicture ?? ""}
                   alt="mentors-images"
                   width={100}
                   height={100}
