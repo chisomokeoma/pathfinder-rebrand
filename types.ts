@@ -107,6 +107,7 @@ export interface MentorsList {
   email: string;
   name: string;
   industry: string;
+  profilePicture: string;
 }
 
 export interface MentorDetails {

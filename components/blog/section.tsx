@@ -35,15 +35,28 @@ export default function SectionsBlog() {
     <React.Fragment>
       <main className="">
         <section>
-          {user?.role === "MENTOR" ? (
-            <Link href="/blogs/create-article">
-              <Button className="h-[50px]" variant="primary">
-                <span className="flex items-center text-base font-semibold leading-[17.92px] text-white gap-1">
-                  Create Resources
-                </span>
-              </Button>
-            </Link>
-          ) : null}
+          {/* {user?.role === "MENTOR" ? ( */}
+          <Link href="/blogs/create-article">
+            <Button
+              styles={{
+                root: {
+                 
+                  background: "#4B0082",
+                  height: "49px",
+                  paddingInline: "32px",
+                  borderRadius: "8px",
+                  width: "fit-content",
+                },
+              }}
+              className="h-[50px]"
+              variant="primary"
+            >
+              <span className="flex items-center text-base font-semibold leading-[17.92px] text-white gap-1">
+                Create Articles
+              </span>
+            </Button>
+          </Link>
+          {/* ) : null} */}
           <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 mt-2">
             {articleList?.map((resources) => {
               return (
