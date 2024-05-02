@@ -92,8 +92,8 @@ function Mentors() {
                         <Image
                           src={item?.profilePicture ?? ""}
                           alt="mentors-images"
-                          width={20}
-                          height={20}
+                          width={100}
+                          height={100}
                           className=" w-full"
                         />
                       </figure>
