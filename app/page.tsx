@@ -206,8 +206,8 @@ export default function Home() {
   });
 
   const { data: articleList, isLoading: articleLoading } = useQuery({
-    queryFn: () => builder.use().resources.courses.fetch(),
-    queryKey: builder.resources.courses.fetch.get(),
+    queryFn: () => builder.use().resources.article.fetch(),
+    queryKey: builder.resources.article.fetch.get(),
     select: ({ data }) => data,
   });
 

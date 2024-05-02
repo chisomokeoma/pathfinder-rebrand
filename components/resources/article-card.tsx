@@ -7,7 +7,7 @@ export function ArticleCard(props: any) {
   return (
     <div className="flex w-[337.5px] h-[395px] shadow-xl border-2 rounded-[5px] flex-col">
       <div className="w-[285.5px] h-[224px] mx-auto mt-[10px]">
-        <img src="/career.svg/" alt="" />
+        <img src={props?.coverPhoto} alt="" />
       </div>
       <div className="flex ml-[30px] mt-[20px] gap-[10px]">
         <span className="w-[20px] h-[20px] flex">
