@@ -15,6 +15,7 @@ import { cookieStorage, usePortal } from "@ibnlanre/portal";
 import { refetchUserDetails, userAtom } from "@/api/queries-store";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { UserRole } from "@/types";
 
 const navArray = [
   { name: "Home", link: "/", dropDown: <IoIosArrowDown /> },
@@ -202,7 +203,7 @@ export default function NavBar() {
 
             {user?.isVerified ? (
               <div className="flex items-center">
-                <Popover
+                {/* <Popover
                   width="fit-content"
                   position="bottom"
                   withArrow
@@ -243,7 +244,64 @@ export default function NavBar() {
                       Log Out
                     </p>
                   </Popover.Dropdown>
-                </Popover>
+                </Popover> */}
+
+                <Menu>
+                  <Menu.Target>
+                    <Avatar
+                      size={40}
+                      radius="xl"
+                      alt="profile picture"
+                      src={user?.profilePicture ?? ""}
+                      className=" cursor-pointer"
+                    />
+                  </Menu.Target>
+
+                  <Menu.Dropdown>
+                    <Menu.Item>
+                      <h3 className="whitespace-nowrap">{user?.name}</h3>
+                      <p>{user?.role}</p>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <label
+                        htmlFor="profile-input"
+                        className=" text-[18px] font-semibold text-purple cursor-pointer"
+                      >
+                        Change Image
+                      </label>
+                      <FileInput
+                        id="profile-input"
+                        value={img}
+                        onChange={setImg}
+                        className="hidden"
+                        accept="image/png,image/jpeg"
+                      />
+                    </Menu.Item>
+                    {/* <Menu.Item>
+                      <Link
+                        href={
+                          user?.role === UserRole.MENTOR
+                            ? "/user-profile"
+                            : "/user-profile/mentee"
+                        }
+                        className="text-[18px] font-semibold text-purple cursor-pointer"
+                      >
+                        Profile
+                      </Link>
+                    </Menu.Item> */}
+                    <Menu.Item>
+                      <p
+                        onClick={() => {
+                          location.href = "/";
+                          cookieStorage.clear();
+                        }}
+                        className=" text-[18px] font-semibold text-purple cursor-pointer"
+                      >
+                        Log Out
+                      </p>
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
               </div>
             ) : (
               <Link href="/login">

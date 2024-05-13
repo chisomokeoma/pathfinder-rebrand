@@ -1,7 +1,15 @@
-import { CourseDetailsResponse, MentorDetailsResources } from "@/types";
+import { userAtom } from "@/api/queries-store";
+import {
+  CourseDetailsResponse,
+  MentorDetailsResources,
+  UserRole,
+} from "@/types";
+import { usePortal } from "@ibnlanre/portal";
+import Link from "next/link";
 import React from "react";
 
 export function CourseCard(props: any) {
+  const [user, setUser] = usePortal.atom(userAtom);
   return (
     <div className="w-[330px] h-[454px] rounded-[5px] border-2 shadow-xl flex flex-col">
       <div className="w-[278px] h-[190px] mx-auto mt-[10px]">
@@ -24,9 +32,15 @@ export function CourseCard(props: any) {
               </div> */}
       <div className="flex ml-[25px] mt-[30px] gap-[30px]">
         <span>
-          <button className="w-[133.45px] h-[40px] bg-[#4B0082] rounded-[15px] text-[#ffff]">
-            Enroll Now &rarr;
-          </button>
+          <Link href="/resources">
+            <button className="w-[133.45px] h-[40px] bg-[#4B0082] rounded-[15px] text-[#ffff]">
+              {user?.role === UserRole.MENTEE
+                ? "Enroll Now "
+                : user?.role === UserRole.MENTOR
+                ? "View Now"
+                : "Enroll Now "}
+            </button>
+          </Link>
         </span>
         <span className="w-[125px] h-[20px] text-[#5751E1] mt-[8px] font-bold text-[16px]">
           {props?.price}

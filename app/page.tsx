@@ -33,8 +33,8 @@ import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { usePortal } from "@ibnlanre/portal";
 import { userAtom } from "@/api/queries-store";
-import {ArticleCard} from "@/components/resources/article-card";
-import {CourseCard} from "@/components/resources/course-card";
+import { ArticleCard } from "@/components/resources/article-card";
+import { CourseCard } from "@/components/resources/course-card";
 import { ResourceType } from "@/types";
 
 const items = [
@@ -346,7 +346,7 @@ export default function Home() {
                 </span>
               </h4>
               <Avatar.Group>
-                <Avatar src="/instructor1.svg" />
+                {/* <Avatar src={}/> */}
                 <Avatar src="/instructor2.svg" />
                 <Avatar src="/instructor3.svg" />
                 <Avatar src="/instructor4.svg" />
@@ -459,6 +459,7 @@ export default function Home() {
               </Carousel.Slide>
             ))}
           </Carousel> */}
+
           {courseList?.map((item, idx) => (
             <CourseCard key={idx} {...item} />
           ))}

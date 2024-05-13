@@ -82,7 +82,7 @@ export default function MentorBiodata() {
       const formData = new FormData();
       if (imgMentor) {
         formData.append("profile_picture", imgMentor);
-        mutatePicture(formData)
+        mutatePicture(formData);
       }
       toast.success("Mentor account created successfully");
       push(`/`);
@@ -250,7 +250,8 @@ export default function MentorBiodata() {
           {...mentorForm.getInputProps("levelOfExpertise")}
         />
 
-        <Textarea resize="vertical"
+        <Textarea
+          resize="vertical"
           styles={styles}
           placeholder="Biography"
           {...mentorForm.getInputProps("bio")}

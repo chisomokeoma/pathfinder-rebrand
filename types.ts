@@ -39,6 +39,12 @@ export interface LoggedInUser {
   institution: null;
   availability: UserAvailability[];
   mentees: any[];
+  location: string;
+  industry: string;
+  levelOfExpertise: string;
+  yearsOfExperience: number
+  bio: string
+  headline: string
 }
 
 export enum UserRole {

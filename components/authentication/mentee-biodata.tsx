@@ -84,7 +84,7 @@ export default function MenteeBiodata() {
     mutationFn: (payload: FormData) =>
       builder.use().user.upload_profile_picture(payload),
   });
-  
+
   const [img, setImg] = useState<File | null>(null);
 
   return (
